@@ -1,6 +1,7 @@
 package com.techzoner.weCare.service;
 
 import com.techzoner.weCare.dto.BookingDTO;
+import com.techzoner.weCare.dto.BookingUpdateDTO;
 import com.techzoner.weCare.exception.weCareException;
 import com.techzoner.weCare.repository.BookingRepository;
 import com.techzoner.weCare.repository.CoachRepository;
@@ -10,7 +11,7 @@ import com.techzoner.weCare.utilites.Coach;
 import com.techzoner.weCare.utilites.User;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Book;
+
 import java.util.Optional;
 
 @Service
@@ -45,5 +46,22 @@ public class BookingServiceImpl implements BookingService{
     @Override
     public void deleteBooking(Integer bookingId) {
         bookingRepo.deleteById(bookingId);
+    }
+
+    @Override
+    public Boolean rescheduleBooking(Integer bookingId, BookingUpdateDTO bookingUpdatedto) throws weCareException {
+        Booking existingBooking = bookingRepo.findById(bookingId)
+                .orElseThrow(() -> new weCareException("Booking with ID " + bookingId + " not found."));
+        if (bookingUpdatedto.getSlot() != null) {
+            existingBooking.setSlot(bookingUpdatedto.getSlot());
+        }
+
+        if (bookingUpdatedto.getAppointmentDate() != null) {
+            existingBooking.setAppointmentDate(bookingUpdatedto.getAppointmentDate());
+        }
+
+        // 3. Save the updated booking to the database.
+        bookingRepo.save(existingBooking);
+        return true;
     }
 }
