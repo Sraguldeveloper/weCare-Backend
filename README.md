@@ -25,12 +25,8 @@ Life Coaches can also register, manage their schedules, and view upcoming appoin
 
 ## 🛠️ Tech Stack
 - **Backend Framework**: Spring Boot (REST API)
-- **Database**: Auto-generated via JPA/Hibernate  
+- **Database**: Postgresql  
 - **Build Tool**: Maven/Gradle  
-- **Security**: Spring Security (for authentication & authorization)  
-- **Email Notifications**: JavaMailSender  
 
 ---
-
-## 📂 Project Structure
 
